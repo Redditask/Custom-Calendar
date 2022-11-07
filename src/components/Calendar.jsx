@@ -8,6 +8,12 @@ const monthList = [
     "Sep", "Oct", "Nov", "Dec"
 ];
 
+const weekDayList = [
+    "Mon", "Tue", "Wed",
+    "Thu", "Fri", "Sat",
+    "Sun"
+];
+
 const VISIBLE_DAYS = 7 * 6;
 
 const getDaysAmount = (year, month) => {
@@ -19,6 +25,9 @@ const getDaysAmount = (year, month) => {
 
 const getNextMonthDays = (year, month) => {
     const nextMonthDaysAmount = VISIBLE_DAYS - getCurrMonthDays(year, month).length - getPrevMonthDays(year, month).length;
+    //console.log(nextMonthDaysAmount)
+    //console.log(getCurrMonthDays(year, month).length)
+    //console.log(getPrevMonthDays(year, month).length)
 
     const [nextYear, nextMonth] = (month === 11) ? [year+1, 0] : [year, month+1];
     const dates = [];
@@ -36,13 +45,12 @@ const getNextMonthDays = (year, month) => {
 const getPrevMonthDays = (year, month) => {
     const firstDayOfCurrentMonth = new Date(year, month, 1);
     const weekDay = firstDayOfCurrentMonth.getDay();
-
     const prevMonthDaysAmount = getDaysAmount(year, month-1);
 
     const [prevYear, prevMonth] = (month === 0) ? [year-1, 11] : [year, month-1];
     const dates = [];
     //weekDay - 1 = сколько дней нужно взять из предыдущего месяца
-    for (let i = 0; i<weekDay-1; i++){
+    for (let i = weekDay-2; i>=0; i--){
         dates.push({
             year: prevYear,
             month: prevMonth,
@@ -56,8 +64,6 @@ const getPrevMonthDays = (year, month) => {
 const getCurrMonthDays = (year, month) => {
     const daysAmount = getDaysAmount(year, month);
     const dates = [];
-
-    //<= ?
     for (let i = 1; i<=daysAmount; i++){
         dates.push({
             year,
@@ -78,11 +84,10 @@ const Calendar = ({value, onChange}) => {
         return [currentYear, currentMonth, currentDay];
     }, [value])
 
-    const [onCalendarYear] = useState(()=>value.getFullYear());
-    const [onCalendarMonth] = useState(()=>value.getMonth());
+    const [onCalendarYear, setOnCalendarYear] = useState(()=>value.getFullYear());
+    const [onCalendarMonth, setOnCalendarMonth] = useState(()=>value.getMonth());
 
     const calendarData = useMemo(() => {
-
         const prevMonth = getPrevMonthDays(onCalendarYear, onCalendarMonth);
         const currMonth = getCurrMonthDays(onCalendarYear, onCalendarMonth);
         const nextMonth = getNextMonthDays(onCalendarMonth, onCalendarMonth);
@@ -93,26 +98,42 @@ const Calendar = ({value, onChange}) => {
     //console.log(calendarData)
 
     const nextYear = () => {
-
+        setOnCalendarYear(year => year+1);
     }
 
     const prevYear = () => {
-
+        setOnCalendarYear(onCalendarYear-1);
     }
 
     const nextMonth = () => {
-
+        if (onCalendarMonth===11){
+            setOnCalendarYear(onCalendarYear+1);
+            setOnCalendarMonth(0);
+        }else setOnCalendarMonth(onCalendarMonth+1);
     }
 
     const prevMonth = () => {
-
+        if (onCalendarMonth===0){
+            setOnCalendarYear(onCalendarYear-1);
+            setOnCalendarMonth(11);
+        }else setOnCalendarMonth(onCalendarMonth-1);
     }
 
     return (
-        <div className={styles.Calendar}>
-            Current date:
-            <div>
-                {day} {month} {year}
+        <div>
+            <div className={styles.Button}>
+                <button onClick={prevYear}>prev</button> {onCalendarYear} <button onClick={nextYear}>next</button>
+            </div>
+            <div className={styles.Button}>
+                <button onClick={prevMonth}>prev</button> {monthList[onCalendarMonth]} <button onClick={nextMonth}>next</button>
+            </div>
+            <div className={styles.Calendar}>
+                {weekDayList.map(weekDay=>
+                    <div className={styles.Calendar__weekDay}>{weekDay}</div>
+                )}
+                {calendarData.map(data=>
+                    <div className={styles.Calendar__cell}>{data.day}</div>
+                )}
             </div>
         </div>
     );
