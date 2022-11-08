@@ -1,5 +1,5 @@
 import styles from './styles/App.module.scss';
-import Calendar from "./components/Calendar";
+import Calendar from "./components/Calendar/Calendar";
 import {useState} from "react";
 
 function App() {
