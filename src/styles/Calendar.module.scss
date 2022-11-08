@@ -1,42 +1,50 @@
 .Calendar {
-  width: 51.7rem;
-  height: 41.1rem;
+  width: 80rem;
+  height: 40rem;
 
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: 0.4fr repeat(6, 1fr);
 
-  gap: 0.1rem;
-
-  border: lightgrey 0.1rem solid;
+  border: silver 0.1rem solid;
   border-radius: 1rem;
 
-  background-color: lightgrey;
+  background-color: white;
 
   margin-top: 1rem;
-  margin-left: 15rem;
+  margin-left: 5rem;
 
   &__cell {
     display: flex;
-    justify-content: right;
 
-    border: lightgrey 0.1rem solid;
-    border-radius: 1rem;
+    font-size: 1.5rem;
+
+    border-top: silver 0.01rem solid;
+    border-right: silver 0.01rem solid;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
 
     background-color: white;
 
     padding-top: 0.25rem;
-    padding-right: 0.25rem;
+    padding-left: 0.25rem;
+
+    &:nth-child(7n){
+      border-right: silver 0rem solid;
+    }
   }
 
   &__weekDay{
-    border: lightgrey 0.1rem solid;
+    border: 0rem white solid;
     border-radius: 1rem;
 
+    color: silver;
     background-color: white;
 
     font-size: 2rem;
     text-align: center;
+
+    padding: 1rem;
   }
 }
 
