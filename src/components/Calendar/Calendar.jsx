@@ -6,13 +6,6 @@ import {isActiveMonth, isToday} from "./calendarUtils";
 const utils = require ("./calendarUtils");
 const infoData = require("./calendarInfoData");
 
-/*
-ToDo:
- Добавить стилей для выбранной ячейки
- Добавить возможность выносить выбранную дату в родительский компонент (Redux?)
- ^^^ на будущее, для использования в других проектах ^^^
-*/
-
 const Calendar = ({value, select}) => {
     const [onCalendarYear, setOnCalendarYear] = useState(() => value.getFullYear());
     const [onCalendarMonth, setOnCalendarMonth] = useState(() => value.getMonth());
@@ -54,7 +47,8 @@ const Calendar = ({value, select}) => {
                     className={styles.button}
                     onClick={prevYear}
                     title="prev year"
-                >&#129144;
+                >
+                    &#129144;
                 </p>
 
                 {onCalendarYear}
@@ -63,7 +57,8 @@ const Calendar = ({value, select}) => {
                     className={styles.button}
                     onClick={nextYear}
                     title="next year"
-                >&#129146;
+                >
+                    &#129146;
                 </p>
             </div>
             <div className={styles.ChangeData}>
@@ -71,7 +66,8 @@ const Calendar = ({value, select}) => {
                     className={styles.button}
                     onClick={prevMonth}
                     title="prev month"
-                >&#129144;
+                >
+                    &#129144;
                 </p>
 
                 {infoData.monthsList[onCalendarMonth]}
@@ -80,7 +76,8 @@ const Calendar = ({value, select}) => {
                     className={styles.button}
                     onClick={nextMonth}
                     title="next month"
-                >&#129146;
+                >
+                    &#129146;
                 </p>
             </div>
             <div className={styles.Calendar}>
@@ -93,7 +90,13 @@ const Calendar = ({value, select}) => {
                         if (utils.isToday(data)) className = styles.Calendar__currentDay;
 
                         return (
-                            <div className={className} key={data.day + "" + data.month + "" + data.year}>{data.day}</div>
+                            <div
+                                onClick={()=>console.log(data)}
+                                className={className}
+                                key={data.day + "" + data.month + "" + data.year}
+                            >
+                                {data.day}
+                            </div>
                         )
                     }
                 )}
