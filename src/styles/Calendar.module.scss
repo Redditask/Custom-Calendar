@@ -1,3 +1,24 @@
+@mixin cell($color){
+  display: flex;
+  color: $color;
+
+  font-size: 1.5rem;
+
+  border-top: silver 0.01rem solid;
+  border-right: silver 0.01rem solid;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+
+  background-color: white;
+
+  padding-top: 0.25rem;
+  padding-left: 0.25rem;
+
+  &:nth-child(7n){
+    border-right: silver 0rem solid;
+  }
+}
+
 .Calendar {
   width: 80rem;
   height: 40rem;
@@ -15,23 +36,15 @@
   margin-left: 5rem;
 
   &__cell {
-    display: flex;
+    @include cell(silver);
+  }
 
-    font-size: 1.5rem;
+  &__activeMonth {
+    @include cell(black);
+  }
 
-    border-top: silver 0.01rem solid;
-    border-right: silver 0.01rem solid;
-    border-bottom-left-radius: 1rem;
-    border-bottom-right-radius: 1rem;
-
-    background-color: white;
-
-    padding-top: 0.25rem;
-    padding-left: 0.25rem;
-
-    &:nth-child(7n){
-      border-right: silver 0rem solid;
-    }
+  &__currentDay {
+    @include cell(red);
   }
 
   &__weekDay{
@@ -48,7 +61,26 @@
   }
 }
 
-.Button {
+.ChangeData {
+  font-size: 1.5rem;
+
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+
   margin-top: 2rem;
   margin-left: 15rem;
+}
+
+.button {
+  cursor: pointer;
+
+  transition: 0.5s;
+
+  margin-left: 1rem;
+  margin-right: 1rem;
+
+  &:hover {
+    transform: scale(1.5);
+  }
 }

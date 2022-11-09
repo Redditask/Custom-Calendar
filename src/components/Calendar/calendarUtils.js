@@ -62,11 +62,29 @@ const getCurrMonthDays = (year, month) => {
     return dates;
 };
 
+const isToday = (date) => {
+    const today = new Date();
+
+    if(date.year === today.getFullYear()
+    && date.month === today.getMonth()
+    && date.day === today.getDate()) return true;
+
+    return false;
+};
+
+const isActiveMonth = (data, onCalendarMonth) => {
+    if (data.month===onCalendarMonth) return true;
+
+    return false;
+}
+
 
 module.exports = {
     getDaysAmount,
     getWeekDay,
     getPrevMonthDays,
     getCurrMonthDays,
-    getNextMonthDays
+    getNextMonthDays,
+    isToday,
+    isActiveMonth
 };
